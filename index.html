@@ -16,65 +16,61 @@
       <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
         <div class="container-fluid">
           <h1 class="navbar-brand fs-1 mx-auto">My To-Do List</h1>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
         </div>
       </nav>
     </header>
-    <div class="container mt-5 col-6">
-      <div class="input-group mb-4">
-        <input
-          type="text"
-          id="inputtext"
-          class="form-control"
-          placeholder="Enter the task"
-          aria-label="Recipient's username"
-          aria-describedby="button-addon2"
-        />
-        <button
-          class="btn btn-outline-success"
-          type="button"
-          id="add"
-          id="button-addon2"
-        >
-          Add
-        </button>
+    <!-- Wrapped the main content in a row and adjusted column widths for responsiveness -->
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="input-group mb-4">
+            <input
+              type="text"
+              id="inputtext"
+              class="form-control"
+              placeholder="Enter the task"
+              aria-label="Recipient's username"
+              aria-describedby="button-addon2"
+            />
+            <button
+              class="btn btn-outline-success"
+              type="button"
+              id="add"
+              id="button-addon2"
+            >
+              Add
+            </button>
+          </div>
+          <ul class="list-group" id="parentlist">
+            <li class="list-group-item d-flex justify-content-between" id="list">
+              <h4 class="flex-grow-1">Hit the Gym</h4>
+              <button class="btn btn-warning mx-2" onclick="editTask(this)">
+                Edit
+              </button>
+              <button class="btn btn-danger" onclick="removeTask(this)">
+                Remove
+              </button>
+            </li>
+          </ul>
+        </div>
+        </div>
       </div>
-      <ul class="list-group" id="parentlist">
-        <li class="list-group-item d-flex justify-content-between" id="list">
-          <h4 class="flex-grow-1">Hit the Gym</h4>
-          <button class="btn btn-warning mx-5" onclick="editTask(this)">
-            Edit
-          </button>
-          <button class="btn btn-danger" onclick="removeTask(this)">
-            Remove
-          </button>
-        </li>
-      </ul>
     </div>
     <script>
       // to add an element into list
       let addBtn = document.getElementById("add");
       addBtn.addEventListener("click", addTask);
       let parentlist = document.getElementById("parentlist");
+
       function addTask(e) {
-        //to remove the empty message if there is
-        //to  get the entered input
+        // to remove the empty message if there is
+        // to  get the entered input
         let currentInput = document.getElementById("inputtext");
         if (currentInput.value == "") {
-          alert("you have not entered the task"); //empty task cannot be inserted
+          alert("you have not entered the task"); // empty task cannot be inserted
         }
         // console.log(currentInput.value);
-        //to create the li element
+        // to create the li element
         else {
           if (
             parentlist.children[0].className == "emptyMsg alert alert-danger"
@@ -86,31 +82,31 @@
           newli.className =
             "list-group-item d-flex justify-content-between my-2";
           newli.id = "list";
-          //adding text to li element
+          // adding text to li element
           newli.innerHTML = `<h4 class="flex-grow-1">${currentInput.value} </h4>
-                <button class="btn btn-warning mx-5" onclick="editTask(this)" >Edit</button>
+                <button class="btn btn-warning mx-2" onclick="editTask(this)" >Edit</button>
                 <button class="btn btn-danger " onclick="removeTask(this)" >Remove</button>`;
-          //to append the created element into ul
+          // to append the created element into ul
           parentlist.appendChild(newli);
-          currentInput.value = ""; //cleraing the input field
-           // Add event listeners for marking as complete and incomplete
+          currentInput.value = ""; // clearing the input field
+          // Add event listeners for marking as complete and incomplete
           newli.querySelector("h4").addEventListener("click", markAsComplete);
           newli
             .querySelector("h4")
             .addEventListener("dblclick", markAsIncomplete);
         }
       }
-      //to remove the element
+      // to remove the element
       function removeTask(currentElement) {
-        currentElement.parentElement.remove(); //removing the parent element
+        currentElement.parentElement.remove(); // removing the parent element
         if (parentlist.children.length <= 0) {
           let newmsg = document.createElement("h4");
-          newmsg.textContent = "Nothing is here please add a task! "; // to give message if there are no element
-          parentlist.appendChild(newmsg); //append message to parent
-          newmsg.className = "emptyMsg alert alert-danger"; //styling
+          newmsg.textContent = "Nothing is here please add a task! "; // to give message if there are no elements
+          parentlist.appendChild(newmsg); // append message to parent
+          newmsg.className = "emptyMsg alert alert-danger"; // styling
         }
       }
-      //to edit the element
+      // to edit the element
       function editTask(currentElement) {
         if (currentElement.textContent == "Done") {
           currentElement.textContent = "Edit";
